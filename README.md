@@ -1,4 +1,7 @@
 # 3D CNC - FAI data read
+---
+Faith Hall and Thomas Keene
+---
 ## Objective
 List of active jobs needing a FAI
  
