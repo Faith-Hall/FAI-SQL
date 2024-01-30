@@ -20,4 +20,30 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 ## Resources 
 - [Microsoft SQL Server 2019 Essential Training](https://www.linkedin.com/learning-login/share?forceAccount=false&redirect=https%3A%2F%2Fwww.linkedin.com%2Flearning%2Fmicrosoft-sql-server-2019-essential-training%3Ftrk%3Dshare_ent_url%26shareId%3DEYYpokdQQ1y5WMY6ToeNpA%253D%253D)
 - [Intermediate SQL for Data Scientists](https://www.linkedin.com/learning/intermediate-sql-for-data-scientists/the-need-for-sql-in-data-science)
-  
+
+## Scripts
+### SQL Server
+```
+select    J.[Job]      ,j.[Customer]      ,c.[Name]      ,[Top_Lvl_Job]      ,J.[Status] ,O.[Status]  ,[Open_Operations]  ,O.[Work_Center]  ,O.[WC_Vendor]  ,O.[Description]     
+ 
+,O.[Est_Total_Hrs] as 'Est Operatiom Hours' -- FYI Called Alias
+ 
+,J.[Est_Total_Hrs]      ,J.[Sched_End]  ,J.[Lead_Days]      ,[Part_Number]      ,J.[Description]     ,J.[Priority] 
+,D.[Promised_Date]   ,O.[Lead_Days], D.[DeliveryKey], J.[Sched_Start], O.[Sched_Start],O.[Description],J.[Job]
+ 
+,U.[Text1] as 'Master R'-- FYI Called Alias
+,U.[Text2] as 'Project L'
+,U.[Text3] as 'Repeat'
+,U.[Text4] as 'Packaging R'
+ 
+from dbo.Job J
+inner join dbo.Customer C on J.Customer = C.Customer
+inner join dbo.Job_Operation O on J.job = O.Job
+inner join dbo.User_Values U on J.User_Values = U.User_Values
+inner join dbo.Delivery D on J.job = D.job where J.status = ('active')and O.status != ('C') ORDER BY J.Job --and O.status = ('O')
+```
+
+Excel
+```
+= Odbc.Query("dsn=jobboss32", "select #(lf)      J.[Job]#(lf)      ,j.[Customer]#(lf)      ,c.[Name]#(lf)      ,[Top_Lvl_Job]#(lf)      ,J.[Status]#(lf)#(tab)  ,O.[Status][OP STATUS]#(lf)  ,[Open_Operations]#(lf)#(tab)  ,O.[Work_Center]#(lf)#(tab)  ,O.[WC_Vendor]#(lf)#(tab)  ,O.[Description]#(lf)      ,O.[Est_Total_Hrs] [Est Operation Hours]#(lf)      ,J.[Est_Total_Hrs]#(lf)      ,J.[Sched_End]#(lf)#(tab)  ,J.[Lead_Days]#(lf)      ,[Part_Number]#(lf)      ,J.[Description]#(lf)      ,J.[Priority]#(lf)      ,D.[Promised_Date]#(lf)   ,O.[Lead_Days]#(lf), D.[DeliveryKey]#(lf), J.[Sched_Start]#(lf), O.[Sched_Start]#(lf)--#(tab)  ,O.[Description]#(lf),J.[Job]#(lf),U.[Text2]#(lf),J.[Customer_PO],J.[Order_Quantity],J.[Make_Quantity],J.[Completed_Quantity]#(lf)#(lf)from dbo.Job J#(lf)#(lf)inner join dbo.Customer C#(lf)on J.Customer = C.Customer#(lf)inner join dbo.User_Values U#(lf)on J.User_values = U.User_values#(lf)inner join dbo.Job_Operation O#(lf)on J.job = O.Job#(lf)inner join dbo.Delivery D#(lf)on J.Top_Lvl_job = D.job#(lf)where J.status = ('active')and O.status != ('C') Order By J.Job")
+```
