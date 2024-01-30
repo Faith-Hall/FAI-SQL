@@ -20,6 +20,7 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 ## Resources 
 - [Microsoft SQL Server 2019 Essential Training](https://www.linkedin.com/learning-login/share?forceAccount=false&redirect=https%3A%2F%2Fwww.linkedin.com%2Flearning%2Fmicrosoft-sql-server-2019-essential-training%3Ftrk%3Dshare_ent_url%26shareId%3DEYYpokdQQ1y5WMY6ToeNpA%253D%253D)
 - [Intermediate SQL for Data Scientists](https://www.linkedin.com/learning/intermediate-sql-for-data-scientists/the-need-for-sql-in-data-science)
+- [Updating Data in Tables Script](https://stackoverflow.com/questions/22229765/update-sql-server-table-from-excel-vba?rq=4)
 
 ## Scripts
 ### SQL Server - Joining Tables
