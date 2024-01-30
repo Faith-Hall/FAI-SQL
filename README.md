@@ -22,7 +22,7 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 - [Intermediate SQL for Data Scientists](https://www.linkedin.com/learning/intermediate-sql-for-data-scientists/the-need-for-sql-in-data-science)
 
 ## Scripts
-SQL Server - Joining Tables
+### SQL Server - Joining Tables
 ```
 SELECT J.[Job] ,j.[Customer], c.[Name], [Top_Lvl_Job], J.[Status], O.[Status], [Open_Operations],
 O.[Work_Center], O.[WC_Vendor], O.[Description], O.[Est_Total_Hrs] AS 'Est Operatiom Hours' -- FYI Called Alias
