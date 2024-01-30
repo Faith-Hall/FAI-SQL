@@ -23,7 +23,8 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 
 ## Scripts
 </details>
-### SQL Server - Joining Tables 
+<summary>SQL Server - Joining Tables</summary>
+<br>
 ```
 SELECT J.[Job] ,j.[Customer], c.[Name], [Top_Lvl_Job], J.[Status], O.[Status], [Open_Operations],
 O.[Work_Center], O.[WC_Vendor], O.[Description], O.[Est_Total_Hrs] AS 'Est Operatiom Hours' -- FYI Called Alias
