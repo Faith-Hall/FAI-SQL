@@ -40,6 +40,7 @@ INNER JOIN dbo.Customer C ON J.Customer = C.Customer
 INNER JOIN dbo.Job_Operation O ON J.job = O.Job
 INNER JOIN dbo.User_Values U ON J.User_Values = U.User_Values
 INNER JOIN dbo.Delivery D ON J.job = D.job
+
 WHERE J.STATUS = ('active')and O.STATUS != ('C') ORDER BY J.Job --and O.status = ('O')
 ```
 
