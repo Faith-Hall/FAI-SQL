@@ -24,8 +24,8 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 ## Scripts
 ### SQL Server
 ```
-SELECT J.[Job] ,j.[Customer], c.[Name], [Top_Lvl_Job], J.[Status], O.[Status], [Open_Operations], O.[Work_Center], O.[WC_Vendor], O.[Description]     
- ,O.[Est_Total_Hrs] AS 'Est Operatiom Hours' -- FYI Called Alias
+SELECT J.[Job] ,j.[Customer], c.[Name], [Top_Lvl_Job], J.[Status], O.[Status], [Open_Operations],
+O.[Work_Center], O.[WC_Vendor], O.[Description], O.[Est_Total_Hrs] AS 'Est Operatiom Hours' -- FYI Called Alias
  
 ,J.[Est_Total_Hrs], J.[Sched_End], J.[Lead_Days], [Part_Number], J.[Description], J.[Priority] 
 ,D.[Promised_Date], O.[Lead_Days], D.[DeliveryKey], J.[Sched_Start], O.[Sched_Start], O.[Description], J.[Job]
