@@ -22,6 +22,7 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 - [Intermediate SQL for Data Scientists](https://www.linkedin.com/learning/intermediate-sql-for-data-scientists/the-need-for-sql-in-data-science)
 
 ## Scripts
+</details>
 ### SQL Server - Joining Tables 
 ```
 SELECT J.[Job] ,j.[Customer], c.[Name], [Top_Lvl_Job], J.[Status], O.[Status], [Open_Operations],
@@ -44,6 +45,7 @@ INNER JOIN dbo.Delivery D ON J.job = D.job
 
 WHERE J.STATUS = ('active')and O.STATUS != ('C') ORDER BY J.Job --and O.status = ('O')
 ```
+</details>
 
 ### Excel - Joining Tables
 ```
