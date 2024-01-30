@@ -43,7 +43,7 @@ inner join dbo.User_Values U on J.User_Values = U.User_Values
 inner join dbo.Delivery D on J.job = D.job where J.status = ('active')and O.status != ('C') ORDER BY J.Job --and O.status = ('O')
 ```
 
-Excel
+### Excel
 ```
 = Odbc.Query("dsn=jobboss32", "select #(lf)      J.[Job]#(lf)      ,j.[Customer]#(lf)      ,c.[Name]#(lf)      ,[Top_Lvl_Job]#(lf)      ,J.[Status]#(lf)#(tab)  ,O.[Status][OP STATUS]#(lf)  ,[Open_Operations]#(lf)#(tab)  ,O.[Work_Center]#(lf)#(tab)  ,O.[WC_Vendor]#(lf)#(tab)  ,O.[Description]#(lf)      ,O.[Est_Total_Hrs] [Est Operation Hours]#(lf)      ,J.[Est_Total_Hrs]#(lf)      ,J.[Sched_End]#(lf)#(tab)  ,J.[Lead_Days]#(lf)      ,[Part_Number]#(lf)      ,J.[Description]#(lf)      ,J.[Priority]#(lf)      ,D.[Promised_Date]#(lf)   ,O.[Lead_Days]#(lf), D.[DeliveryKey]#(lf), J.[Sched_Start]#(lf), O.[Sched_Start]#(lf)--#(tab)  ,O.[Description]#(lf),J.[Job]#(lf),U.[Text2]#(lf),J.[Customer_PO],J.[Order_Quantity],J.[Make_Quantity],J.[Completed_Quantity]#(lf)#(lf)from dbo.Job J#(lf)#(lf)inner join dbo.Customer C#(lf)on J.Customer = C.Customer#(lf)inner join dbo.User_Values U#(lf)on J.User_values = U.User_values#(lf)inner join dbo.Job_Operation O#(lf)on J.job = O.Job#(lf)inner join dbo.Delivery D#(lf)on J.Top_Lvl_job = D.job#(lf)where J.status = ('active')and O.status != ('C') Order By J.Job")
 ```
