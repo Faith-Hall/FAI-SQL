@@ -24,23 +24,23 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 ## Scripts
 ### SQL Server
 ```
-select    J.[Job]      ,j.[Customer]      ,c.[Name]      ,[Top_Lvl_Job]      ,J.[Status] ,O.[Status]  ,[Open_Operations]  ,O.[Work_Center]  ,O.[WC_Vendor]  ,O.[Description]     
+SELECT J.[Job] ,j.[Customer], c.[Name], [Top_Lvl_Job], J.[Status], O.[Status], [Open_Operations], O.[Work_Center], O.[WC_Vendor], O.[Description]     
  
-,O.[Est_Total_Hrs] as 'Est Operatiom Hours' -- FYI Called Alias
+,O.[Est_Total_Hrs] AS 'Est Operatiom Hours' -- FYI Called Alias
  
 ,J.[Est_Total_Hrs]      ,J.[Sched_End]  ,J.[Lead_Days]      ,[Part_Number]      ,J.[Description]     ,J.[Priority] 
 ,D.[Promised_Date]   ,O.[Lead_Days], D.[DeliveryKey], J.[Sched_Start], O.[Sched_Start],O.[Description],J.[Job]
  
-,U.[Text1] as 'Master R'-- FYI Called Alias
-,U.[Text2] as 'Project L'
-,U.[Text3] as 'Repeat'
-,U.[Text4] as 'Packaging R'
+,U.[Text1] AS 'Master R'-- FYI Called Alias
+,U.[Text2] AS 'Project L'
+,U.[Text3] AS 'Repeat'
+,U.[Text4] AS 'Packaging R'
  
-from dbo.Job J
-inner join dbo.Customer C on J.Customer = C.Customer
-inner join dbo.Job_Operation O on J.job = O.Job
-inner join dbo.User_Values U on J.User_Values = U.User_Values
-inner join dbo.Delivery D on J.job = D.job where J.status = ('active')and O.status != ('C') ORDER BY J.Job --and O.status = ('O')
+FROM dbo.Job J
+inner join dbo.Customer C ON J.Customer = C.Customer
+inner join dbo.Job_Operation O ON J.job = O.Job
+inner join dbo.User_Values U ON J.User_Values = U.User_Values
+inner join dbo.Delivery D ON J.job = D.job WHERE J.STATUS = ('active')and O.STATUS != ('C') ORDER BY J.Job --and O.status = ('O')
 ```
 
 ### Excel
