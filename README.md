@@ -34,7 +34,7 @@ O.[Work_Center], O.[WC_Vendor], O.[Description], O.[Est_Total_Hrs] AS 'Est Opera
 ,U.[Text2] AS 'Project L'
 ,U.[Text3] AS 'Repeat'
 ,U.[Text4] AS 'Packaging R'
-,U.[Text5] as 'FAI Report'
+,U.[Text5] AS 'FAI_Report'
  
 FROM dbo.Job J
 INNER JOIN dbo.Customer C ON J.Customer = C.Customer
