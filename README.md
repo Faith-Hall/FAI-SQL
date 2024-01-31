@@ -112,4 +112,57 @@ Sub FAI_Update()
     
 End Sub
 ```
+Option Explicit
+
+Sub Export()
+    Dim SQLUser As String
+    Dim SQLPassword As String
+    Dim SQLServer As String
+    Dim DBName As String
+    Dim DbConn As String
+    
+    Dim SQLQuery As String
+    
+    Dim strStatus As String
+    Dim i As Integer
+    Dim j As Integer
+    Dim jOffset As Integer
+    Dim iStartRow As Integer
+    Dim iStep As Integer
+    
+    iStep = 100
+    jOffset = 1
+    iStartRow = 8
+    i = iStartRow
+    
+    SQLUser = "SA"
+    SQLPassword = "xxxxxxxx"
+    SQLServer = "5fe97ccbd07b"
+    DBName = "AdventureWorks2022"
+    
+    DbConn = "Provider=SQLOLEDB.1;Persist Security Info=True;User ID=" & SQLUser & ";Password=" & SQLPassword & ";Initial Catalog=" & DBName & ";" & _
+                    "Data Source=" & SQLServer & ";Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;" & _
+                    "Use Encryption for Data=False;Tag with column collation when possible=False"
+    
+    'Set cn_ADO = NewADODB.Connection
+    'cn_ADO.OpenDbConn
+    
+    SQLQuery = "select "
+    SQLQuery = SQLQuery + "[BusinessEntityID], "
+    SQLQuery = SQLQuery + "[Title], "
+    SQLQuery = SQLQuery + "[FirstName], "
+    SQLQuery = SQLQuery + "[MiddleName], "
+    SQLQuery = SQLQuery + "[LastName], "
+    SQLQuery = SQLQuery + "[Suffix], "
+    SQLQuery = SQLQuery + "[PhoneNumber], "
+    SQLQuery = SQLQuery + "[PhoneNumberType], "
+    SQLQuery = SQLQuery + "[AddressLine1], "
+    SQLQuery = SQLQuery + "[AddressLine2], "
+    SQLQuery = SQLQuery + "[City], "
+    SQLQuery = SQLQuery + "[StateProvinceName], "
+    SQLQuery = SQLQuery + "[PostalCode], "
+    SQLQuery = SQLQuery + "[CountryRegionName] "
+    SQLQuery = SQLQuery + "from "
+    SQLQuery = SQLQuery + "Sales.vIndividualCustomer "
+End Sub
 
