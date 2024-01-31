@@ -88,3 +88,28 @@ SELECT TOP (1000) [Job]
 INTO FAI
 FROM [FAI_Report]
 ```
+```
+Sub FAI_Update()
+    Dim connection As ADODB.connection
+    Set connection = New ADODB.connection
+    
+    'Dim server_name As String, database_name As String
+    'Let server_name = "FAITHS-HP\SQLSERVER2022"
+    'Let database_name = "JB Training"
+    
+    With connection
+        .Provider = "SQLOLEDB.1"
+        .CursorLocation = adUseServer
+        .ConnectionTimeout = 0
+        .Properties("Data Source").Value = "Faiths-HP\SQLSERVER2022"
+        .Properties("Integrated Secruity").Value = "SSPI"
+        .Properties("Initial Catalog").Value = "JB Training"
+        .Open
+    
+        '.ConnectionString = "Provider=SQLOLEDB;Server=" & server_name &_
+            '";database=" & database_name & ";Integrated Security=SSPI;"
+    End With
+    
+End Sub
+```
+
