@@ -22,7 +22,7 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 - [Intermediate SQL for Data Scientists](https://www.linkedin.com/learning/intermediate-sql-for-data-scientists/the-need-for-sql-in-data-science)
 - [Updating Data in Tables Script](https://stackoverflow.com/questions/22229765/update-sql-server-table-from-excel-vba?rq=4)
 - [Inserting Data](https://www.youtube.com/watch?v=lwa56Pdm7Sk)
-- [Exporting Data](https://www.youtube.com/watch?v=AR3fiGr9q44](https://www.youtube.com/watch?v=AR3fiGr9q44)
+- [Exporting Data](https://www.youtube.com/watch?v=AR3fiGr9q44)
 
 ## Scripts
 ### SQL Server - Joining Tables
