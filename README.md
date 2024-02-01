@@ -21,6 +21,8 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 - [Microsoft SQL Server 2019 Essential Training](https://www.linkedin.com/learning-login/share?forceAccount=false&redirect=https%3A%2F%2Fwww.linkedin.com%2Flearning%2Fmicrosoft-sql-server-2019-essential-training%3Ftrk%3Dshare_ent_url%26shareId%3DEYYpokdQQ1y5WMY6ToeNpA%253D%253D)
 - [Intermediate SQL for Data Scientists](https://www.linkedin.com/learning/intermediate-sql-for-data-scientists/the-need-for-sql-in-data-science)
 - [Updating Data in Tables Script](https://stackoverflow.com/questions/22229765/update-sql-server-table-from-excel-vba?rq=4)
+- [Inserting Data](https://www.youtube.com/watch?v=lwa56Pdm7Sk)
+- [Exporting Data](https://www.youtube.com/watch?v=khdNk0j5Wco)
 
 ## Scripts
 ### SQL Server - Joining Tables
@@ -88,81 +90,3 @@ SELECT TOP (1000) [Job]
 INTO FAI
 FROM [FAI_Report]
 ```
-```
-Sub FAI_Update()
-    Dim connection As ADODB.connection
-    Set connection = New ADODB.connection
-    
-    'Dim server_name As String, database_name As String
-    'Let server_name = "FAITHS-HP\SQLSERVER2022"
-    'Let database_name = "JB Training"
-    
-    With connection
-        .Provider = "SQLOLEDB.1"
-        .CursorLocation = adUseServer
-        .ConnectionTimeout = 0
-        .Properties("Data Source").Value = "Faiths-HP\SQLSERVER2022"
-        .Properties("Integrated Secruity").Value = "SSPI"
-        .Properties("Initial Catalog").Value = "JB Training"
-        .Open
-    
-        '.ConnectionString = "Provider=SQLOLEDB;Server=" & server_name &_
-            '";database=" & database_name & ";Integrated Security=SSPI;"
-    End With
-    
-End Sub
-```
-Option Explicit
-
-Sub Export()
-    Dim SQLUser As String
-    Dim SQLPassword As String
-    Dim SQLServer As String
-    Dim DBName As String
-    Dim DbConn As String
-    
-    Dim SQLQuery As String
-    
-    Dim strStatus As String
-    Dim i As Integer
-    Dim j As Integer
-    Dim jOffset As Integer
-    Dim iStartRow As Integer
-    Dim iStep As Integer
-    
-    iStep = 100
-    jOffset = 1
-    iStartRow = 8
-    i = iStartRow
-    
-    SQLUser = "SA"
-    SQLPassword = "xxxxxxxx"
-    SQLServer = "5fe97ccbd07b"
-    DBName = "AdventureWorks2022"
-    
-    DbConn = "Provider=SQLOLEDB.1;Persist Security Info=True;User ID=" & SQLUser & ";Password=" & SQLPassword & ";Initial Catalog=" & DBName & ";" & _
-                    "Data Source=" & SQLServer & ";Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;" & _
-                    "Use Encryption for Data=False;Tag with column collation when possible=False"
-    
-    'Set cn_ADO = NewADODB.Connection
-    'cn_ADO.OpenDbConn
-    
-    SQLQuery = "select "
-    SQLQuery = SQLQuery + "[BusinessEntityID], "
-    SQLQuery = SQLQuery + "[Title], "
-    SQLQuery = SQLQuery + "[FirstName], "
-    SQLQuery = SQLQuery + "[MiddleName], "
-    SQLQuery = SQLQuery + "[LastName], "
-    SQLQuery = SQLQuery + "[Suffix], "
-    SQLQuery = SQLQuery + "[PhoneNumber], "
-    SQLQuery = SQLQuery + "[PhoneNumberType], "
-    SQLQuery = SQLQuery + "[AddressLine1], "
-    SQLQuery = SQLQuery + "[AddressLine2], "
-    SQLQuery = SQLQuery + "[City], "
-    SQLQuery = SQLQuery + "[StateProvinceName], "
-    SQLQuery = SQLQuery + "[PostalCode], "
-    SQLQuery = SQLQuery + "[CountryRegionName] "
-    SQLQuery = SQLQuery + "from "
-    SQLQuery = SQLQuery + "Sales.vIndividualCustomer "
-End Sub
-
