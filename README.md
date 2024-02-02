@@ -90,7 +90,7 @@ SELECT TOP (1000) [Job]
 INTO FAI
 FROM [FAI_Report]
 ```
-### Export VBA Script 
+### VBA - Export data from SQL Server to Excel 
 ```
 Option Explicit
 
