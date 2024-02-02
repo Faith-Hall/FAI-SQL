@@ -1,0 +1,97 @@
+Option Explicit
+
+Private Sub cmdExport_click()
+    Dim cn_ADO As ADODB.Connection
+    Dim rs_ADO As ADODB.Recordset
+    Dim cmd_ADO As ADODB.Command
+
+    
+    Dim SQLUser As String
+    Dim SQLPassword As String
+    Dim SQLServer As String
+    Dim DBName As String
+    Dim DbConn As String
+    
+    Dim SQLQuery As String
+    
+    Dim strStatus As String
+    Dim i As Integer
+    Dim j As Integer
+    Dim jOffset As Integer
+    Dim iStartRow As Integer
+    Dim iStep As Integer
+
+    iStep = 100
+    jOffset = 1
+    iStartRow = 1
+    i = iStartRow
+    
+    SQLUser = "super_sa"
+    SQLPassword = "super_sa"
+    SQLServer = "Faiths-HP\SQLSERVER2022"
+    DBName = "JB Training"
+    
+    DbConn = "Provider=SQLOLEDB.1;Persist Security Info=True;User ID=" & SQLUser & ";Password=" & SQLPassword & ";Initial Catalog=" & DBName & ";" & _
+            "Data Source=" & SQLServer & ";Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;" & _
+            "Use Encryption for Data=False;Tag with column collation when possible=False"
+    
+    Set cn_ADO = New ADODB.Connection
+    cn_ADO.Open DbConn
+    
+    SQLQuery = "SELECT "
+    SQLQuery = SQLQuery + "[Job], "
+    SQLQuery = SQLQuery + "[Customer], "
+    SQLQuery = SQLQuery + "[Name], "
+    SQLQuery = SQLQuery + "[FAI_Report] "
+    SQLQuery = SQLQuery + "From "
+    SQLQuery = SQLQuery + "[JB Training].[dbo].[FAI] "
+      
+    Application.Cursor = xlWait
+    Application.StatusBar = "Logging onto database..."
+    
+    Set cmd_ADO = New ADODB.Command
+    
+    cmd_ADO.CommandText = SQLQuery
+    cmd_ADO.ActiveConnection = cn_ADO
+    cmd_ADO.Execute
+    
+    ' Open the recordset
+    Set rs_ADO = New ADODB.Recordset
+    Set rs_ADO.ActiveConnection = cn_ADO
+    rs_ADO.Open cmd_ADO
+    
+    Range(Cells(i, 1), Cells(Rows.Count, rs_ADO.Fields.Count)).Clear
+    Cells(1, 1).Select
+
+    Application.StatusBar = "Formatting columns..."
+    
+    'Output Column names
+    For j = 0 To rs_ADO.Fields.Count - 1
+        Cells(i, j + jOffset).Value = rs_ADO.Fields(CLng(j)).Name
+        Cells(i, j + jOffset).Font.Bold = True
+        Next j
+        
+    strStatus = "Loading data..."
+    Application.StatusBar = strStatus
+    'dataset output
+    While Not rs_ADO.EOF
+        i = i + 1
+        For j = 0 To rs_ADO.Fields.Count - 1
+            Cells(i, j + jOffset).Value = rs_ADO.Fields(j).Value
+        Next j
+        rs_ADO.MoveNext
+    Wend
+    
+    'Close ADO and recordset
+    rs_ADO.Close
+    Set cn_ADO = Nothing
+    Set cmd_ADO = Nothing
+    Set rs_ADO = Nothing
+
+    'Application.StatusBar = False
+    'Application.StatusBar = "Total record count: " & i - iStartRow
+    Application.Cursor = xlDefault
+    Application.ScreenUpdating = True
+
+
+End Sub
