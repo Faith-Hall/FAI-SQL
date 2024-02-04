@@ -23,6 +23,7 @@ To have either of you or both of you load the SQL engine on your machine. Then I
 - [Updating Data in Tables Script](https://stackoverflow.com/questions/22229765/update-sql-server-table-from-excel-vba?rq=4)
 - [Inserting Data - YouTube Video](https://www.youtube.com/watch?v=lwa56Pdm7Sk)
 - [Exporting Data - YouTube Video](https://www.youtube.com/watch?v=AR3fiGr9q44)
+- [Exporting Data part 2 - YouTube Video](https://www.youtube.com/watch?v=khdNk0j5Wco)
 
 ## Scripts
 ### SQL Server - Joining Tables
