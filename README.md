@@ -91,11 +91,13 @@ SELECT TOP (1000) [Job]
 INTO FAI
 FROM [FAI_Report]
 ```
-### VBA - Export data from SQL Server to Excel 
+### VBA - Export and data from SQL Server to Excel 
 ```
 Option Explicit
 
-Private Sub cmdExport_click()
+Private Sub cmdExport_Click()
+'    On Error GoTo ErrExit
+    
     Dim cn_ADO As ADODB.Connection
     Dim rs_ADO As ADODB.Recordset
     Dim cmd_ADO As ADODB.Command
@@ -134,6 +136,7 @@ Private Sub cmdExport_click()
     cn_ADO.Open DbConn
     
     SQLQuery = "SELECT "
+    SQLQuery = SQLQuery + "[ID], "
     SQLQuery = SQLQuery + "[Job], "
     SQLQuery = SQLQuery + "[Customer], "
     SQLQuery = SQLQuery + "[Name], "
@@ -155,7 +158,7 @@ Private Sub cmdExport_click()
     Set rs_ADO.ActiveConnection = cn_ADO
     rs_ADO.Open cmd_ADO
     
-    Range(Cells(i, 1), Cells(Rows.Count, rs_ADO.Fields.Count)).Clear
+    Range(Cells(i, 1), Cells(Rows.Count, jOffset + rs_ADO.Fields.Count)).Clear
     Cells(1, 1).Select
 
     Application.StatusBar = "Formatting columns..."
@@ -184,9 +187,112 @@ Private Sub cmdExport_click()
     Set rs_ADO = Nothing
 
     'Application.StatusBar = False
-    'Application.StatusBar = "Total record count: " & i - iStartRow
+    Application.StatusBar = "Total record count: " & i - iStartRow
     Application.Cursor = xlDefault
     Application.ScreenUpdating = True
+    
+'    Exit Sub
+'ErrExit:
+'            MsgBox "Error: " & Err & " " & Error(Err)
+'            Application.StatusBar = False
+'            Application.Cursor = xlDefault
+'
+'            If Not cn_ADO Is Nothing Then
+'                Set cn_ADO = Nothing
+'            End If
+'            If Not cmd_ADO Is Nothing Then
+'                Set cmd_ADO = Nothing
+'            End If
+'            If Not rs_ADO Is Nothing Then
+'                Set rs_ADO = Nothing
+'            End If
+End Sub
+
+Private Sub cmdImport_Click()
+'    On Error GoTo ErrExit
+
+    Dim cn_ADO As ADODB.Connection
+    Dim cmd_ADO As ADODB.Command
+
+    
+    Dim SQLUser As String
+    Dim SQLPassword As String
+    Dim SQLServer As String
+    Dim DBName As String
+    Dim DbConn As String
+   
+    Dim SQLQuery As String
+    Dim strWhere As String
+    
+    'Dim strStatus As String
+    Dim i As Integer
+    'Dim j As Integer
+    Dim jOffset As Integer
+    Dim iStartRow As Integer
+    'Dim iStep As Integer
+   
+     'Data Columns
+    Dim strID As String
+    Dim strJob As String
+    Dim strCustomer As String
+    Dim strName As String
+    Dim strFAI_Report As String
+
+    'iStep = 100
+    jOffset = 1
+    iStartRow = 2
+    i = iStartRow
+
+    SQLUser = "super_sa"
+    SQLPassword = "super_sa"
+    SQLServer = "Faiths-HP\SQLSERVER2022"
+    DBName = "JB Training"
+    
+    DbConn = "Provider=SQLOLEDB.1;Persist Security Info=True;User ID=" & SQLUser & ";Password=" & SQLPassword & ";Initial Catalog=" & DBName & ";" & _
+            "Data Source=" & SQLServer & ";Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;" & _
+            "Use Encryption for Data=False;Tag with column collation when possible=False"
+    
+    Set cn_ADO = New ADODB.Connection
+    cn_ADO.Open DbConn
+
+    Set cmd_ADO = New ADODB.Command
+
+    While Cells(i, jOffset).Value <> ""
+        strID = Cells(i, 0 + jOffset).Value
+        strJob = Cells(i, 1 + jOffset).Value
+        strCustomer = Cells(i, 2 + jOffset).Value
+        strName = Cells(i, 3 + jOffset).Value
+        strFAI_Report = Cells(i, 4 + jOffset).Value
+        
+        strWhere = "ID = " & strID
+
+        SQLQuery = "UPDATE dbo.FAI " & _
+                    "SET " & _
+                    "FAI_Report = '" & strFAI_Report & "' " & _
+                    "WHERE " & strWhere
+              
+        cmd_ADO.CommandText = SQLQuery
+        cmd_ADO.ActiveConnection = cn_ADO
+        cmd_ADO.Execute
+
+        i = i + 1
+    Wend
+
+    Set cmd_ADO = Nothing
+    Set cn_ADO = Nothing
+
+'    Exit Sub
+'
+'ErrExit:
+'        MsgBox "Error: " & Err & " " & Error(Err)
+'        Application.StatusBar = False
+'        Application.Cursor = xlDefault
+'
+'        If Not cn_ADO Is Nothing Then
+'            Set cn_ADO = Nothing
+'        End If
+'            If Not cmd_ADO Is Nothing Then
+'            Set cmd_ADO = Nothing
 
 
 End Sub
