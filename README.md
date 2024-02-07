@@ -297,3 +297,209 @@ Private Sub cmdImport_Click()
 
 End Sub
 ```
+### VBA - Export and Import Buttons for User_Values Table
+```
+Option Explicit
+
+Private Sub cmdExport_Click()
+'    On Error GoTo ErrExit
+    
+    Dim cn_ADO As ADODB.Connection
+    Dim rs_ADO As ADODB.Recordset
+    Dim cmd_ADO As ADODB.Command
+
+    
+    Dim SQLUser As String
+    Dim SQLPassword As String
+    Dim SQLServer As String
+    Dim DBName As String
+    Dim DbConn As String
+    
+    Dim SQLQuery As String
+    
+    Dim strStatus As String
+    Dim i As Integer
+    Dim j As Integer
+    Dim jOffset As Integer
+    Dim iStartRow As Integer
+    Dim iStep As Integer
+
+    iStep = 100
+    jOffset = 1
+    iStartRow = 1
+    i = iStartRow
+    
+    SQLUser = "super_sa"
+    SQLPassword = "super_sa"
+    SQLServer = "Faiths-HP\SQLSERVER2022"
+    DBName = "JB Training"
+    
+    DbConn = "Provider=SQLOLEDB.1;Persist Security Info=True;User ID=" & SQLUser & ";Password=" & SQLPassword & ";Initial Catalog=" & DBName & ";" & _
+            "Data Source=" & SQLServer & ";Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;" & _
+            "Use Encryption for Data=False;Tag with column collation when possible=False"
+    
+    Set cn_ADO = New ADODB.Connection
+    cn_ADO.Open DbConn
+    
+    SQLQuery = "SELECT "
+    SQLQuery = SQLQuery + "[User_ValuesKey], "
+    SQLQuery = SQLQuery + "[User_Values], "
+    SQLQuery = SQLQuery + "[Date1], "
+    SQLQuery = SQLQuery + "[Date2], "
+    SQLQuery = SQLQuery + "[Text5] "
+    SQLQuery = SQLQuery + "From "
+    SQLQuery = SQLQuery + "[JB Training].[dbo].[User_Values] "
+      
+    Application.Cursor = xlWait
+    Application.StatusBar = "Logging onto database..."
+    
+    Set cmd_ADO = New ADODB.Command
+    
+    cmd_ADO.CommandText = SQLQuery
+    cmd_ADO.ActiveConnection = cn_ADO
+    cmd_ADO.Execute
+    
+    ' Open the recordset
+    Set rs_ADO = New ADODB.Recordset
+    Set rs_ADO.ActiveConnection = cn_ADO
+    rs_ADO.Open cmd_ADO
+    
+    Range(Cells(i, 1), Cells(Rows.Count, jOffset + rs_ADO.Fields.Count)).Clear
+    Cells(1, 1).Select
+
+    Application.StatusBar = "Formatting columns..."
+    
+    'Output Column names
+    For j = 0 To rs_ADO.Fields.Count - 1
+        Cells(i, j + jOffset).Value = rs_ADO.Fields(CLng(j)).Name
+        Cells(i, j + jOffset).Font.Bold = True
+        Next j
+        
+    strStatus = "Loading data..."
+    Application.StatusBar = strStatus
+    'dataset output
+    While Not rs_ADO.EOF
+        i = i + 1
+        For j = 0 To rs_ADO.Fields.Count - 1
+            Cells(i, j + jOffset).Value = rs_ADO.Fields(j).Value
+        Next j
+        rs_ADO.MoveNext
+    Wend
+    
+    'Close ADO and recordset
+    rs_ADO.Close
+    Set cn_ADO = Nothing
+    Set cmd_ADO = Nothing
+    Set rs_ADO = Nothing
+
+    'Application.StatusBar = False
+    Application.StatusBar = "Total record count: " & i - iStartRow
+    Application.Cursor = xlDefault
+    Application.ScreenUpdating = True
+    
+    Exit Sub
+ErrExit:
+            MsgBox "Error: " & Err & " " & Error(Err)
+            Application.StatusBar = False
+            Application.Cursor = xlDefault
+
+            If Not cn_ADO Is Nothing Then
+                Set cn_ADO = Nothing
+            End If
+            If Not cmd_ADO Is Nothing Then
+                Set cmd_ADO = Nothing
+            End If
+            If Not rs_ADO Is Nothing Then
+                Set rs_ADO = Nothing
+            End If
+End Sub
+
+Private Sub cmdImport_Click()
+'    On Error GoTo ErrExit
+
+    Dim cn_ADO As ADODB.Connection
+    Dim cmd_ADO As ADODB.Command
+
+
+    Dim SQLUser As String
+    Dim SQLPassword As String
+    Dim SQLServer As String
+    Dim DBName As String
+    Dim DbConn As String
+
+    Dim SQLQuery As String
+    Dim strWhere As String
+
+    'Dim strStatus As String
+    Dim i As Integer
+    'Dim j As Integer
+    Dim jOffset As Integer
+    Dim iStartRow As Integer
+    'Dim iStep As Integer
+
+     'Data Columns
+    Dim strUser_ValuesKey As String
+    Dim strUser_Values As String
+    Dim strDate1 As String
+    Dim strDate2 As String
+    Dim strText5 As String
+
+    'iStep = 100
+    jOffset = 1
+    iStartRow = 2
+    i = iStartRow
+
+    SQLUser = "super_sa"
+    SQLPassword = "super_sa"
+    SQLServer = "Faiths-HP\SQLSERVER2022"
+    DBName = "JB Training"
+
+    DbConn = "Provider=SQLOLEDB.1;Persist Security Info=True;User ID=" & SQLUser & ";Password=" & SQLPassword & ";Initial Catalog=" & DBName & ";" & _
+            "Data Source=" & SQLServer & ";Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;" & _
+            "Use Encryption for Data=False;Tag with column collation when possible=False"
+
+    Set cn_ADO = New ADODB.Connection
+    cn_ADO.Open DbConn
+
+    Set cmd_ADO = New ADODB.Command
+
+    While Cells(i, jOffset).Value <> ""
+        strUser_ValuesKey = Cells(i, 0 + jOffset).Value
+        strUser_Values = Cells(i, 1 + jOffset).Value
+        strDate1 = Cells(i, 2 + jOffset).Value
+        strDate2 = Cells(i, 3 + jOffset).Value
+        strText5 = Cells(i, 4 + jOffset).Value
+
+        strWhere = "User_ValuesKey = " & strUser_ValuesKey
+
+        SQLQuery = "UPDATE dbo.User_Values " & _
+                    "SET " & _
+                    "Text5 = '" & strText5 & "' " & _
+                    "WHERE " & strWhere
+
+        cmd_ADO.CommandText = SQLQuery
+        cmd_ADO.ActiveConnection = cn_ADO
+        cmd_ADO.Execute
+
+        i = i + 1
+    Wend
+
+    Set cmd_ADO = Nothing
+    Set cn_ADO = Nothing
+
+'    Exit Sub
+'
+'ErrExit:
+'        MsgBox "Error: " & Err & " " & Error(Err)
+'        Application.StatusBar = False
+'        Application.Cursor = xlDefault
+'
+'        If Not cn_ADO Is Nothing Then
+'            Set cn_ADO = Nothing
+'        End If
+'            If Not cmd_ADO Is Nothing Then
+'            Set cmd_ADO = Nothing
+
+
+End Sub
+```
