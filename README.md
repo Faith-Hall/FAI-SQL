@@ -1,4 +1,4 @@
-# 3D CNC - FAI data read
+# 3D CNC - FAI Data Automation
 ---
 Faith Hall and Thomas Keene
 ---
